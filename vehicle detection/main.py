@@ -75,30 +75,21 @@ while True:
     for out in outs:
         print(f"Detection output shape: {out.shape}")
         for detection in out:
-            for obj in detection:
-                if obj.ndim == 1:
-                    obj = obj.reshape(-1)
-                
-                if obj.size >= 85:
-                    scores = obj[5:]
-                    class_id = np.argmax(scores)
-                    confidence = scores[class_id]
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            confidence = scores[class_id]
+            if confidence > 0.2:
+                center_x = int(detection[0] * width)
+                center_y = int(detection[1] * height)
+                w = int(detection[2] * width)
+                h = int(detection[3] * height)
 
-                    # Debug print for object values
-                    print(f"Object detection: class_id={class_id}, confidence={confidence}, obj={obj[:10]}...")
+                x = int(center_x - w / 2)
+                y = int(center_y - h / 2)
 
-                    if confidence > 0.2:  # Adjust confidence threshold as needed
-                        center_x = int(obj[0] * width)
-                        center_y = int(obj[1] * height)
-                        w = int(obj[2] * width)
-                        h = int(obj[3] * height)
-
-                        x = int(center_x - w / 2)
-                        y = int(center_y - h / 2)
-
-                        boxes.append([x, y, w, h])
-                        confidences.append(float(confidence))
-                        class_ids.append(class_id)
+                boxes.append([x, y, w, h])
+                confidences.append(float(confidence))
+                class_ids.append(class_id)
 
     # Debug print for boxes and confidences
     print(f"Detected boxes: {boxes}")
@@ -106,11 +97,10 @@ while True:
     print(f"Detected class_ids: {class_ids}")
 
     # Non-max suppression to remove duplicate boxes
-    indices = cv2.dnn.NMSBoxes(boxes, confidences, score_threshold=0.1, nms_threshold=0.4)  # Lowered threshold
+    indices = cv2.dnn.NMSBoxes(boxes, confidences, score_threshold=0.1, nms_threshold=0.4)
 
     if len(indices) > 0:
-        indices = indices.flatten()  # Flatten the array of indices
-        for i in indices:
+        for i in indices.flatten():
             box = boxes[i]
             x, y, w, h = box
             label = str(classes[class_ids[i]])
