@@ -1,3 +1,3 @@
-Please check the input files Path. 
+Please check the input file Path in the main.py file. 
 
-in Line 5-8, line 24 and, line 29.
+In Lines 5-8, line 24, and line 29.
