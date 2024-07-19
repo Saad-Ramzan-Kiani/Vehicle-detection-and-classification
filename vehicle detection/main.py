@@ -41,7 +41,7 @@ height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 print(f"Video properties: FPS={fps}, Width={width}, Height={height}")
 
 # Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Codec for AVI
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for MP4
 video_writer = cv2.VideoWriter(output_video_file, fourcc, fps, (width, height))
 if video_writer.isOpened():
     print("VideoWriter is open and ready.")
