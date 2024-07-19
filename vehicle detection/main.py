@@ -1,11 +1,13 @@
+#Check file location 
+
 import cv2
 import numpy as np
 import os
 
-cfg_file = r"F:\python projects\vehicle detection\yolov3.cfg"
-weights_file = r"F:\python projects\vehicle detection\yolov3.weights"
-output_video_file = r"F:\python projects\vehicle detection\output_video.mp4"
-output_dir = r"F:\python projects\vehicle detection\images"
+cfg_file = r"Fvehicle detection\yolov3.cfg"
+weights_file = r"\vehicle detection\yolov3.weights"
+output_video_file = r"\vehicle detection\output_video.mp4"
+output_dir = r"\vehicle detection\images"
 
 # Load YOLO
 print("Loading YOLO model...")
@@ -21,12 +23,12 @@ output_layers = [layer_names[i - 1] for i in net.getUnconnectedOutLayers()]
 
 # Load COCO class labels
 classes = []
-with open(r"F:\python projects\vehicle detection\coco.names", "r") as f:
+with open(r"\vehicle detection\coco.names", "r") as f:
     classes = [line.strip() for line in f.readlines()]
 print(f"Loaded {len(classes)} classes.")
 
 # Load video
-video_file = r'F:\python projects\vehicle detection\video1.mp4'
+video_file = r'\vehicle detection\video1.mp4'
 cap = cv2.VideoCapture(video_file)
 if not cap.isOpened():
     print("Error: Could not open video file.")
