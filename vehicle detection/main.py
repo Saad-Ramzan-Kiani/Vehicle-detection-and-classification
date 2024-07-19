@@ -1,4 +1,4 @@
-#Check file location 
+#Check the path of input files
 
 import cv2
 import numpy as np
